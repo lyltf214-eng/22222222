@@ -480,23 +480,23 @@
         @media (max-width: 900px) {
             aside {
                 position: fixed;
-                top: 65px; /* تظهر أسفل الشريط العلوي تماماً */
+                top: 65px;
                 right: 0;
                 left: 0;
                 width: 100%;
-                max-height: 75vh; /* تحديد أقصى ارتفاع للقائمة المنسدلة */
+                max-height: 75vh;
                 height: auto;
                 border-left: none;
                 border-bottom: 2px solid var(--gold-primary);
                 border-radius: 0 0 16px 16px;
                 box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
-                transform: translateY(-150%); /* إخفاء القائمة للأعلى خارج الشاشة */
+                transform: translateY(-150%);
                 opacity: 0;
                 visibility: hidden;
             }
 
             aside.open {
-                transform: translateY(0); /* انسدال القائمة للأسفل */
+                transform: translateY(0);
                 opacity: 1;
                 visibility: visible;
             }
@@ -542,7 +542,7 @@
 
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="بحث..." onkeyup="searchBook()">
+            <input type="text" id="searchInput" placeholder="بحث في الكتاب..." onkeyup="searchBook()">
         </div>
 
         <div class="header-controls">
@@ -558,7 +558,7 @@
     <div class="app-layout">
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-        <!-- Dropdown Sidebar for Mobile -->
+        <!-- Dropdown Sidebar for Mobile & Desktop -->
         <aside id="sidebar">
             <div class="sidebar-header">
                 <span><i class="fa-solid fa-list-ol"></i> فهرس الكتاب</span>
@@ -614,7 +614,7 @@
                     </div>
                     <hr style="border-color: var(--border-color); margin: 25px 0;">
                     <h3><i class="fa-solid fa-circle-info" style="color: var(--gold-primary);"></i> مقدمة عن الكتاب</h3>
-                    <p>تُعدّ البرمجة الكائنية التوجه (Object-Oriented Programming - OOP) واحدة من أهم النماذج البرمجية لتطوير تطبيقات معقدة وقابلة للتوسع والتطوير بسهولة.</p>
+                    <p>تُعدّ البرمجة الكائنية التوجه (Object-Oriented Programming - OOP) واحدة من أهم النماذج البرمجية لتطوير تطبيقات معقدة وقابلة للتوسع والتطوير بسهولة. توفر لغة JavaScript أسلوباً فريداً للتعامل مع هذا المفهوم يعتمد على الـ Prototypes والـ Classes الحديثة التي أضيفت في تحديث ES6.</p>
                 `
             },
             {
@@ -622,7 +622,7 @@
                 title: "مفهوم البرمجة الكائنية والـ Prototype",
                 content: `
                     <p>تعتمد البرمجة الكائنية على تجميع البيانات والوظائف ضمن كائنات محددة.</p>
-                    ${createCodeBlock(`const student = {\n    name: "دانيه",\n    age: 22,\n    major: "علوم حاسوب"\n};`, 'javascript', 'الكائنات البسيطة')}
+                    ${createCodeBlock(`const student = {\n    name: "دانيه",\n    age: 22,\n    major: "علوم حاسوب",\n    study: function() {\n        console.log(\`تدرس تخصص \${this.major}\`);\n    }\n};\nstudent.study();`, 'javascript', 'الكائنات البسيطة')}
                 `
             },
             {
@@ -630,38 +630,65 @@
                 title: "الكلاسات في JavaScript (Classes)",
                 content: `
                     <p>الكلاسات توفر صياغة أسهل للتعامل مع النماذج الأولية في JavaScript.</p>
-                    ${createCodeBlock(`class User {\n    constructor(name) {\n        this.name = name;\n    }\n}`, 'javascript', 'الكلاسات ES6')}
+                    ${createCodeBlock(`class User {\n    constructor(name) {\n        this.name = name;\n    }\n    getDetails() {\n        return \`المستخدم: \${this.name}\`;\n    }\n}`, 'javascript', 'الكلاسات ES6')}
                 `
             },
             {
                 chapter: "الفصل الثالث",
                 title: "الدوال والخصائص الثابتة (Static Members)",
-                content: `<p>الدوال الثابتة ترتبط بالمخطط الرئيسي للكلاس مباشرة.</p>`
+                content: `
+                    <p>العناصر الثابتة ترتبط بالكلاس نفسه مباشرةً وليس بالنُسخ المشتقة.</p>
+                    ${createCodeBlock(`class MathUtils {\n    static PI = 3.14159;\n    static calculate(r) {\n        return MathUtils.PI * r * r;\n    }\n}\nconsole.log(MathUtils.calculate(5));`, 'javascript', 'العناصر الثابتة')}
+                `
             },
             {
                 chapter: "الفصل الرابع",
                 title: "التغليف (Encapsulation)",
-                content: `<p>حماية البيانات واستخدام رمز # لمنع الوصول المباشر من الخارج.</p>`
+                content: `
+                    <p>حماية البيانات واستخدام رمز # لمنع الوصول المباشر من الخارج.</p>
+                    ${createCodeBlock(`class BankAccount {\n    #balance = 0;\n    deposit(amount) {\n        this.#balance += amount;\n        return this.#balance;\n    }\n}`, 'javascript', 'التغليف الآمن')}
+                `
             },
             {
                 chapter: "الفصل الخامس",
                 title: "الوراثة (Inheritance & Super)",
-                content: `<p>استخدام الكلمة المفتاحية extends للوراثة من كلاس آخر.</p>`
+                content: `
+                    <p>استخدام الكلمة المفتاحية extends للوراثة من كلاس آخر.</p>
+                    ${createCodeBlock(`class Employee {\n    constructor(name) { this.name = name; }\n}\nclass Manager extends Employee {\n    constructor(name, dept) {\n        super(name);\n        this.dept = dept;\n    }\n}`, 'javascript', 'الوراثة')}
+                `
             },
             {
                 chapter: "الفصل السادس",
                 title: "تعدد الأشكال (Polymorphism)",
-                content: `<p>استجابة كائنات مختلفة لنفس اسم الدالة بطرق تناسب كل كائن.</p>`
+                content: `
+                    <p>استجابة كائنات مختلفة لنفس اسم الدالة بطرق تناسب كل كائن.</p>
+                    ${createCodeBlock(`class Shape {\n    draw() { console.log("رسم عام"); }\n}\nclass Circle extends Shape {\n    draw() { console.log("رسم دائرة"); }\n}`, 'javascript', 'تعدد الأشكال')}
+                `
             },
             {
                 chapter: "الفصل السابع",
                 title: "تطبيق عملي متكامل",
-                content: `<p>بناء نظام إدارة منصة تعليمية باستخدام كافة مفاهيم OOP.</p>`
+                content: `
+                    <p>بناء نظام إدارة منصة تعليمية باستخدام كافة مفاهيم OOP.</p>
+                    ${createCodeBlock(`class SystemPlatform {\n    static log(msg) {\n        console.log(\`[LOG]: \${msg}\`);\n    }\n}\nSystemPlatform.log("بدء النظام");`, 'javascript', 'مشروع عملي')}
+                `
             },
             {
                 chapter: "التلخيص والخاتمة",
                 title: "جدول الملخص وخاتمة الكتاب",
-                content: `<p>ملخص شامل لكافة القواعد والكلمات المفتاحية المكتسبة.</p>`
+                content: `
+                    <p>ملخص شامل لكافة القواعد والكلمات المفتاحية المكتسبة.</p>
+                    <table class="styled-table">
+                        <thead>
+                            <tr><th>المفهوم</th><th>الكلمة المفتاحية</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>الكلاس</td><td><code>class</code></td></tr>
+                            <tr><td>التغليف</td><td><code>#field</code></td></tr>
+                            <tr><td>الوراثة</td><td><code>extends</code></td></tr>
+                        </tbody>
+                    </table>
+                `
             }
         ];
 
@@ -746,8 +773,10 @@
         }
 
         function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('sidebarOverlay').classList.remove('active');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if(sidebar) sidebar.classList.remove('open');
+            if(overlay) overlay.classList.remove('active');
         }
 
         function toggleTheme() {
