@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>كتاب البرمجة الكائنية في جافاسكربت | JavaScript OOP</title>
     <!-- Google Fonts Cairo & JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
             --border-color: rgba(212, 175, 55, 0.25);
             --shadow-lux: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.1);
             --code-bg: #121319;
-            --sidebar-width: 280px;
+            --sidebar-width: 300px;
         }
 
         [data-theme="light"] {
@@ -53,7 +53,8 @@
 
         html, body {
             width: 100%;
-            overflow-x: hidden; /* منع التمرير الأفقي تماماً */
+            height: 100%;
+            overflow-x: hidden !important; /* منع أي تمرير أفقي */
         }
 
         body {
@@ -62,6 +63,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         /* Reading Progress Bar */
@@ -70,7 +72,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
@@ -102,7 +104,7 @@
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .header-brand i {
@@ -129,14 +131,14 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--gold-primary);
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.95rem;
+            font-size: 1rem;
             flex-shrink: 0;
         }
 
@@ -149,7 +151,7 @@
         .search-box {
             position: relative;
             flex: 1;
-            max-width: 220px;
+            max-width: 200px;
             margin: 0 10px;
         }
 
@@ -187,34 +189,42 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(3px);
-            z-index: 940;
+            z-index: 980;
             display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .sidebar-overlay.active {
             display: block;
+            opacity: 1;
         }
 
-        /* 🖥️ Sidebar (Computer View Default) */
+        /* 🚪 Sidebar (قائمة جانبية مخفية جهة اليمين وتظهر بالزر للكل) */
         aside {
-            width: var(--sidebar-width);
+            position: fixed;
+            top: 0;
+            right: -320px; /* مخفية تماماً على اليمين خارج الشاشة */
+            width: 300px;
+            height: 100vh;
             background: var(--bg-secondary);
             border-left: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            position: sticky;
-            top: 65px;
-            height: calc(100vh - 65px);
+            z-index: 990;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
-            z-index: 950;
-            flex-shrink: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        aside.open {
+            right: 0; /* تظهر بالانزلاق من اليمين عند الفتح */
         }
 
         .sidebar-header {
-            padding: 16px;
+            padding: 20px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--gold-primary);
             display: flex;
@@ -224,22 +234,22 @@
 
         .index-list {
             list-style: none;
-            padding: 10px;
+            padding: 12px;
         }
 
         .index-item {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .index-link {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
+            gap: 12px;
+            padding: 12px 14px;
             color: var(--text-muted);
             text-decoration: none;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
         }
@@ -251,22 +261,22 @@
         }
 
         .index-link i {
-            font-size: 0.95rem;
+            font-size: 1rem;
             width: 20px;
             text-align: center;
         }
 
-        /* Content Area */
+        /* Content Area (تأخذ عرض الشاشة بالكامل دون انضغاط) */
         main {
             flex: 1;
-            padding: 30px;
+            padding: 25px 15px;
             max-width: 900px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-width: 0; /* منع الخروج عن العرض في flexbox */
+            min-width: 0;
         }
 
         /* Chapter Card / Page Display */
@@ -274,7 +284,7 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px 20px;
             box-shadow: var(--shadow-lux);
             animation: fadeIn 0.4s ease-in-out;
             width: 100%;
@@ -295,23 +305,23 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 1px solid var(--gold-primary);
         }
 
         .book-page h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--text-main);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
-            word-break: break-word;
+            line-height: 1.4;
         }
 
         .book-page p {
             line-height: 1.8;
             color: var(--text-main);
-            font-size: 1rem;
+            font-size: 0.98rem;
             margin-bottom: 16px;
         }
 
@@ -355,7 +365,7 @@
             background: var(--code-bg) !important;
             margin: 0 !important;
             padding: 14px !important;
-            overflow-x: auto; /* شريط تمرير داخلي للأكواد فقط */
+            overflow-x: auto; /* شريط تمرير للأكواد فقط */
             direction: ltr;
             text-align: left;
             width: 100%;
@@ -398,50 +408,30 @@
             white-space: nowrap;
         }
 
-        /* 📱 الجوال (الشاشات أقل من 850 بكسل) */
-        @media (max-width: 850px) {
-            /* إخراج القائمة تماماً من محاذاة الصفحة لتحول القائمة لمنسدلة من الأعلى */
+        /* 📱 تحسينات الشاشات الصغيرة والجوالات */
+        @media (max-width: 600px) {
             aside {
-                position: fixed;
-                top: 65px;
-                right: 0;
-                left: 0;
-                width: 100%;
-                max-height: 75vh;
-                height: auto;
-                border-left: none;
-                border-bottom: 2px solid var(--gold-primary);
-                border-radius: 0 0 16px 16px;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-                transform: translateY(-150%);
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            aside.open {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
+                width: 85%; /* القائمة تأخذ 85% من الشاشة في الجوال */
+                right: -100%;
             }
 
             main {
                 padding: 15px 10px;
-                width: 100%;
-            }
-
-            .book-page {
-                padding: 18px 12px;
             }
 
             .search-box {
-                max-width: 130px;
+                max-width: 110px;
+            }
+
+            .header-brand h1 {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <!-- Progress Bar -->
+    <!-- Reading Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -449,7 +439,7 @@
     <!-- Header -->
     <header>
         <div class="header-brand">
-            <button class="btn-icon" id="toggleSidebar" onclick="toggleSidebar()" title="قائمة الفهرس">
+            <button class="btn-icon" id="toggleSidebar" onclick="toggleSidebar()" title="فتح الفهرس">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <i class="fa-solid fa-book-bookmark"></i>
@@ -471,7 +461,7 @@
     <div class="app-layout">
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-        <!-- Sidebar -->
+        <!-- 🚪 القائمة الجانبية المنسدلة من اليمين -->
         <aside id="sidebar">
             <div class="sidebar-header">
                 <span><i class="fa-solid fa-list-ol"></i> فهرس الكتاب</span>
@@ -511,7 +501,7 @@
                 chapter: "الغلاف والمقدمة",
                 title: "الكتاب الشامل في البرمجة الكائنية (OOP in JS)",
                 content: `
-                    <div style="text-align: center; padding: 10px 0;">
+                    <div style="text-align: center; padding: 15px 0;">
                         <i class="fa-solid fa-laptop-code" style="font-size: 3rem; color: var(--gold-primary); margin-bottom: 15px;"></i>
                         <h1 style="font-size: 1.5rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">دليل جافاسكربت الحديثة للبرمجة الكائنية</h1>
                         <p style="font-size: 0.95rem; color: var(--text-muted);">مرجع تفاعلي وشامل لتعلم معمارية OOP بلغة JavaScript</p>
