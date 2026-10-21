@@ -25,7 +25,7 @@
             --border-color: rgba(212, 175, 55, 0.25);
             --shadow-lux: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.1);
             --code-bg: #121319;
-            --sidebar-width: 300px;
+            --sidebar-width: 280px;
         }
 
         [data-theme="light"] {
@@ -51,13 +51,17 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* منع التمرير الأفقي تماماً */
+        }
+
         body {
             background-color: var(--bg-primary);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
         /* Reading Progress Bar */
@@ -83,7 +87,7 @@
         header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 24px;
+            padding: 10px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -92,92 +96,92 @@
             z-index: 900;
             box-shadow: var(--shadow-lux);
             height: 65px;
+            width: 100%;
         }
 
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .header-brand i {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: var(--gold-primary);
         }
 
         .header-brand h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            white-space: nowrap;
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .btn-icon {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--gold-primary);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            flex-shrink: 0;
         }
 
         .btn-icon:hover {
             background: var(--gold-primary);
             color: #000;
-            transform: translateY(-2px);
         }
 
         /* Search Container */
         .search-box {
             position: relative;
-            width: 250px;
+            flex: 1;
+            max-width: 220px;
+            margin: 0 10px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 8px 36px 8px 12px;
+            padding: 6px 32px 6px 10px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-main);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             outline: none;
-        }
-
-        .search-box input:focus {
-            border-color: var(--gold-primary);
         }
 
         .search-box i {
             position: absolute;
-            right: 12px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gold-primary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* Layout Main */
         .app-layout {
             display: flex;
             flex: 1;
-            position: relative;
             width: 100%;
+            position: relative;
         }
 
-        /* Sidebar Overlay for Mobile */
+        /* Sidebar Overlay */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
@@ -191,7 +195,7 @@
             display: block;
         }
 
-        /* 🖥️ Sidebar (جانبية في الكمبيوتر، ومنسدلة/منزلقة في الجوال) */
+        /* 🖥️ Sidebar (Computer View Default) */
         aside {
             width: var(--sidebar-width);
             background: var(--bg-secondary);
@@ -203,11 +207,12 @@
             height: calc(100vh - 65px);
             overflow-y: auto;
             z-index: 950;
-            transition: all 0.3s ease;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .sidebar-header {
-            padding: 20px;
+            padding: 16px;
             border-bottom: 1px solid var(--border-color);
             font-size: 0.95rem;
             font-weight: 700;
@@ -230,11 +235,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 14px;
+            padding: 10px 12px;
             color: var(--text-muted);
             text-decoration: none;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
             cursor: pointer;
         }
@@ -246,7 +251,7 @@
         }
 
         .index-link i {
-            font-size: 1rem;
+            font-size: 0.95rem;
             width: 20px;
             text-align: center;
         }
@@ -254,14 +259,14 @@
         /* Content Area */
         main {
             flex: 1;
-            padding: 40px;
-            max-width: 950px;
+            padding: 30px;
+            max-width: 900px;
             width: 100%;
             margin: 0 auto;
-            min-height: calc(100vh - 140px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-width: 0; /* منع الخروج عن العرض في flexbox */
         }
 
         /* Chapter Card / Page Display */
@@ -269,10 +274,9 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 40px;
+            padding: 30px;
             box-shadow: var(--shadow-lux);
             animation: fadeIn 0.4s ease-in-out;
-            position: relative;
             width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -296,48 +300,35 @@
         }
 
         .book-page h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--text-main);
             margin-bottom: 20px;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            word-break: break-word;
         }
 
         .book-page p {
-            line-height: 1.9;
-            color: var(--text-main);
-            font-size: 1.05rem;
-            margin-bottom: 18px;
-            text-align: justify;
-        }
-
-        .book-page ul, .book-page ol {
-            margin: 15px 25px 25px 0;
             line-height: 1.8;
             color: var(--text-main);
-        }
-
-        .book-page li {
-            margin-bottom: 8px;
+            font-size: 1rem;
+            margin-bottom: 16px;
         }
 
         /* Code Block Styling */
         .code-container {
             position: relative;
-            margin: 25px 0;
+            margin: 20px 0;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            max-width: 100%;
+            width: 100%;
         }
 
         .code-header {
             background: #1a1c23;
-            padding: 8px 16px;
+            padding: 8px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -348,78 +339,40 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8rem;
             color: var(--gold-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .btn-copy {
             background: rgba(212, 175, 55, 0.15);
             border: 1px solid var(--gold-primary);
             color: var(--gold-primary);
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 5px;
             font-size: 0.75rem;
             cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-copy:hover {
-            background: var(--gold-primary);
-            color: #000;
         }
 
         pre {
             background: var(--code-bg) !important;
             margin: 0 !important;
-            padding: 18px !important;
-            overflow-x: auto;
+            padding: 14px !important;
+            overflow-x: auto; /* شريط تمرير داخلي للأكواد فقط */
             direction: ltr;
             text-align: left;
-            max-width: 100%;
-            white-space: pre;
+            width: 100%;
         }
 
         code {
             font-family: 'JetBrains Mono', monospace !important;
-            font-size: 0.9rem !important;
+            font-size: 0.85rem !important;
         }
 
-        /* Table Styling */
-        .styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 0.95rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            display: block;
-            border: 1px solid var(--border-color);
-        }
-
-        .styled-table thead tr {
-            background-color: var(--gold-light);
-            color: var(--gold-dark);
-            text-align: right;
-            font-weight: bold;
-        }
-
-        .styled-table th, .styled-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .styled-table tbody tr:nth-of-type(even) {
-            background-color: var(--bg-card);
-        }
-
-        /* Bookmarks and Footer Nav */
+        /* Footer Nav */
         .page-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 25px;
+            padding-top: 15px;
             border-top: 1px solid var(--border-color);
             gap: 10px;
         }
@@ -428,60 +381,26 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            background: var(--gold-primary);
-            color: #000;
-            border-color: var(--gold-primary);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+            gap: 6px;
         }
 
         .page-indicator {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--gold-primary);
             white-space: nowrap;
         }
 
-        /* Toast Alert */
-        .toast {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background: var(--bg-card);
-            border: 1px solid var(--gold-primary);
-            color: var(--text-main);
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lux);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* 📱 Responsive Mobile Adjustments (تصبح القائمة منسدلة للأعلى/الأسفل في الجوال فقط) */
-        @media (max-width: 900px) {
+        /* 📱 الجوال (الشاشات أقل من 850 بكسل) */
+        @media (max-width: 850px) {
+            /* إخراج القائمة تماماً من محاذاة الصفحة لتحول القائمة لمنسدلة من الأعلى */
             aside {
                 position: fixed;
                 top: 65px;
@@ -493,7 +412,7 @@
                 border-left: none;
                 border-bottom: 2px solid var(--gold-primary);
                 border-radius: 0 0 16px 16px;
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
                 transform: translateY(-150%);
                 opacity: 0;
                 visibility: hidden;
@@ -506,26 +425,23 @@
             }
 
             main {
-                padding: 20px 10px;
+                padding: 15px 10px;
+                width: 100%;
             }
 
             .book-page {
-                padding: 20px 15px;
+                padding: 18px 12px;
             }
 
             .search-box {
-                width: 130px;
-            }
-
-            .header-brand h1 {
-                font-size: 0.95rem;
+                max-width: 130px;
             }
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <!-- Reading Progress Bar -->
+    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -542,13 +458,10 @@
 
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="بحث في الكتاب..." onkeyup="searchBook()">
+            <input type="text" id="searchInput" placeholder="بحث..." onkeyup="searchBook()">
         </div>
 
         <div class="header-controls">
-            <button class="btn-icon" id="bookmarkBtn" onclick="toggleBookmark()" title="حفظ الإشارة المرجعية">
-                <i class="fa-regular fa-bookmark" id="bookmarkIcon"></i>
-            </button>
             <button class="btn-icon" onclick="toggleTheme()" title="تغيير المظهر">
                 <i class="fa-solid fa-moon" id="themeIcon"></i>
             </button>
@@ -558,7 +471,7 @@
     <div class="app-layout">
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-        <!-- Sidebar (Side on Desktop, Dropdown on Mobile) -->
+        <!-- Sidebar -->
         <aside id="sidebar">
             <div class="sidebar-header">
                 <span><i class="fa-solid fa-list-ol"></i> فهرس الكتاب</span>
@@ -579,9 +492,7 @@
 
         <!-- Main Content -->
         <main>
-            <div id="pageContainer">
-                <!-- Dynamic Page Content Injected Here -->
-            </div>
+            <div id="pageContainer"></div>
 
             <!-- Page Navigation -->
             <div class="page-navigation">
@@ -592,103 +503,60 @@
         </main>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="toast">
-        <i class="fa-solid fa-circle-check" style="color: var(--gold-primary);"></i>
-        <span id="toastMsg">تم النسخ بنجاح!</span>
-    </div>
-
-    <!-- Prism JS Syntax Highlighting -->
+    <!-- JavaScript logic -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
     <script>
         const bookPages = [
             {
                 chapter: "الغلاف والمقدمة",
                 title: "الكتاب الشامل في البرمجة الكائنية (OOP in JS)",
                 content: `
-                    <div style="text-align: center; padding: 20px 0;">
-                        <i class="fa-solid fa-laptop-code" style="font-size: 3.5rem; color: var(--gold-primary); margin-bottom: 20px;"></i>
-                        <h1 style="font-size: 1.8rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;">دليل جافاسكربت الحديثة للبرمجة الكائنية التوجه</h1>
-                        <p style="font-size: 1rem; color: var(--text-muted);">مرجع تفاعلي وشامل لتعلم معمارية OOP ومبادئها البرمجية بلغة JavaScript</p>
+                    <div style="text-align: center; padding: 10px 0;">
+                        <i class="fa-solid fa-laptop-code" style="font-size: 3rem; color: var(--gold-primary); margin-bottom: 15px;"></i>
+                        <h1 style="font-size: 1.5rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">دليل جافاسكربت الحديثة للبرمجة الكائنية</h1>
+                        <p style="font-size: 0.95rem; color: var(--text-muted);">مرجع تفاعلي وشامل لتعلم معمارية OOP بلغة JavaScript</p>
                     </div>
-                    <hr style="border-color: var(--border-color); margin: 25px 0;">
-                    <h3><i class="fa-solid fa-circle-info" style="color: var(--gold-primary);"></i> مقدمة عن الكتاب</h3>
-                    <p>تُعدّ البرمجة الكائنية التوجه (Object-Oriented Programming - OOP) واحدة من أهم النماذج البرمجية لتطوير تطبيقات معقدة وقابلة للتوسع والتطوير بسهولة. توفر لغة JavaScript أسلوباً فريداً للتعامل مع هذا المفهوم يعتمد على الـ Prototypes والـ Classes الحديثة التي أضيفت في تحديث ES6.</p>
                 `
             },
             {
                 chapter: "الفصل الأول",
                 title: "مفهوم البرمجة الكائنية والـ Prototype",
-                content: `
-                    <p>تعتمد البرمجة الكائنية على تجميع البيانات والوظائف ضمن كائنات محددة.</p>
-                    ${createCodeBlock(`const student = {\n    name: "دانيه",\n    age: 22,\n    major: "علوم حاسوب",\n    study: function() {\n        console.log(\`تدرس تخصص \${this.major}\`);\n    }\n};\nstudent.study();`, 'javascript', 'الكائنات البسيطة')}
-                `
+                content: `<p>تعتمد البرمجة الكائنية على تجميع البيانات والدوال داخل كائنات محددة.</p>${createCodeBlock(`const student = { name: "دانيه", age: 22 };`, 'javascript', 'الكائنات البسيطة')}`
             },
             {
                 chapter: "الفصل الثاني",
                 title: "الكلاسات في JavaScript (Classes)",
-                content: `
-                    <p>الكلاسات توفر صياغة أسهل للتعامل مع النماذج الأولية في JavaScript.</p>
-                    ${createCodeBlock(`class User {\n    constructor(name) {\n        this.name = name;\n    }\n    getDetails() {\n        return \`المستخدم: \${this.name}\`;\n    }\n}`, 'javascript', 'الكلاسات ES6')}
-                `
+                content: `<p>الكلاسات توفر صياغة أسهل للتعامل مع النماذج الأولية.</p>${createCodeBlock(`class User {\n    constructor(name) { this.name = name; }\n}`, 'javascript', 'الكلاسات')}`
             },
             {
                 chapter: "الفصل الثالث",
                 title: "الدوال والخصائص الثابتة (Static Members)",
-                content: `
-                    <p>العناصر الثابتة ترتبط بالكلاس نفسه مباشرةً وليس بالنُسخ المشتقة.</p>
-                    ${createCodeBlock(`class MathUtils {\n    static PI = 3.14159;\n    static calculate(r) {\n        return MathUtils.PI * r * r;\n    }\n}\nconsole.log(MathUtils.calculate(5));`, 'javascript', 'العناصر الثابتة')}
-                `
+                content: `<p>العناصر الثابتة ترتبط بالكلاس نفسه مباشرةً وليس بالنُسخ المشتقة منه.</p>${createCodeBlock(`class MathUtils {\n    static PI = 3.14159;\n}`, 'javascript', 'Static')}`
             },
             {
                 chapter: "الفصل الرابع",
                 title: "التغليف (Encapsulation)",
-                content: `
-                    <p>حماية البيانات واستخدام رمز # لمنع الوصول المباشر من الخارج.</p>
-                    ${createCodeBlock(`class BankAccount {\n    #balance = 0;\n    deposit(amount) {\n        this.#balance += amount;\n        return this.#balance;\n    }\n}`, 'javascript', 'التغليف الآمن')}
-                `
+                content: `<p>إخفاء وحماية البيانات باستخدام الحقول الخاصة #.</p>${createCodeBlock(`class BankAccount {\n    #balance = 0;\n}`, 'javascript', 'Encapsulation')}`
             },
             {
                 chapter: "الفصل الخامس",
-                title: "الوراثة (Inheritance & Super)",
-                content: `
-                    <p>استخدام الكلمة المفتاحية extends للوراثة من كلاس آخر.</p>
-                    ${createCodeBlock(`class Employee {\n    constructor(name) { this.name = name; }\n}\nclass Manager extends Employee {\n    constructor(name, dept) {\n        super(name);\n        this.dept = dept;\n    }\n}`, 'javascript', 'الوراثة')}
-                `
+                title: "الوراثة (Inheritance)",
+                content: `<p>استخدام الكلمة المفتاحية extends لوراثة الخصائص.</p>${createCodeBlock(`class Manager extends Employee {}`, 'javascript', 'Inheritance')}`
             },
             {
                 chapter: "الفصل السادس",
                 title: "تعدد الأشكال (Polymorphism)",
-                content: `
-                    <p>استجابة كائنات مختلفة لنفس اسم الدالة بطرق تناسب كل كائن.</p>
-                    ${createCodeBlock(`class Shape {\n    draw() { console.log("رسم عام"); }\n}\nclass Circle extends Shape {\n    draw() { console.log("رسم دائرة"); }\n}`, 'javascript', 'تعدد الأشكال')}
-                `
+                content: `<p>استجابة الكائنات المختلفة لنفس اسم الدالة بطرق مختلفة.</p>`
             },
             {
                 chapter: "الفصل السابع",
-                title: "تطبيق عملي متكامل",
-                content: `
-                    <p>بناء نظام إدارة منصة تعليمية باستخدام كافة مفاهيم OOP.</p>
-                    ${createCodeBlock(`class SystemPlatform {\n    static log(msg) {\n        console.log(\`[LOG]: \${msg}\`);\n    }\n}\nSystemPlatform.log("بدء النظام");`, 'javascript', 'مشروع عملي')}
-                `
+                title: "مشروع عملي متكامل",
+                content: `<p>تطبيق عملي لبناء منصة إدارة تعليمية بالكامل.</p>`
             },
             {
                 chapter: "التلخيص والخاتمة",
                 title: "جدول الملخص وخاتمة الكتاب",
-                content: `
-                    <p>ملخص شامل لكافة القواعد والكلمات المفتاحية المكتسبة.</p>
-                    <table class="styled-table">
-                        <thead>
-                            <tr><th>المفهوم</th><th>الكلمة المفتاحية</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>الكلاس</td><td><code>class</code></td></tr>
-                            <tr><td>التغليف</td><td><code>#field</code></td></tr>
-                            <tr><td>الوراثة</td><td><code>extends</code></td></tr>
-                        </tbody>
-                    </table>
-                `
+                content: `<p>خاتمة وتلخيص لأهم مفاهيم OOP في جافاسكربت.</p>`
             }
         ];
 
@@ -699,8 +567,7 @@
             return `
                 <div class="code-container">
                     <div class="code-header">
-                        <span class="code-title"><i class="fa-solid fa-code"></i> ${title}</span>
-                        <button class="btn-copy" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> نسخ</button>
+                        <span class="code-title">${title}</span>
                     </div>
                     <pre><code class="language-${lang}">${escapedCode}</code></pre>
                 </div>
@@ -708,8 +575,6 @@
         }
 
         window.onload = function() {
-            const savedPage = localStorage.getItem('oop_book_last_page');
-            if (savedPage !== null) currentPage = parseInt(savedPage);
             renderPage();
         };
 
@@ -744,7 +609,6 @@
 
         function goToPage(index) {
             currentPage = index;
-            localStorage.setItem('oop_book_last_page', currentPage);
             renderPage();
             closeSidebar();
         }
@@ -752,7 +616,6 @@
         function nextPage() {
             if (currentPage < bookPages.length - 1) {
                 currentPage++;
-                localStorage.setItem('oop_book_last_page', currentPage);
                 renderPage();
             }
         }
@@ -760,52 +623,27 @@
         function prevPage() {
             if (currentPage > 0) {
                 currentPage--;
-                localStorage.setItem('oop_book_last_page', currentPage);
                 renderPage();
             }
         }
 
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
         }
 
         function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            if(sidebar) sidebar.classList.remove('open');
-            if(overlay) overlay.classList.remove('active');
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('active');
         }
 
         function toggleTheme() {
             const body = document.body;
-            const themeIcon = document.getElementById('themeIcon');
             if (body.getAttribute('data-theme') === 'dark') {
                 body.setAttribute('data-theme', 'light');
-                themeIcon.className = 'fa-solid fa-sun';
             } else {
                 body.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fa-solid fa-moon';
             }
-        }
-
-        function copyCode(button) {
-            const container = button.closest('.code-container');
-            const code = container.querySelector('code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                showToast("تم نسخ الكود بنجاح!");
-            });
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.style.display = 'flex';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 2500);
         }
     </script>
 </body>
